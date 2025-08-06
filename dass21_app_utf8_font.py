@@ -71,11 +71,12 @@ stress_ranges = [
 class PDF(FPDF):
     def __init__(self):
         super().__init__()
-        font_path = os.path.join(os.path.dirname(__file__), "DejaVuSans.ttf")
-        self.add_font("DejaVu", "", font_path, uni=True)
+        base_path = os.path.dirname(__file__)
+        self.add_font("DejaVu", "", os.path.join(base_path, "DejaVuSans.ttf"), uni=True)
+        self.add_font("DejaVu", "B", os.path.join(base_path, "DejaVuSans-Bold.ttf"), uni=True)
 
     def header(self):
-        self.set_font("DejaVu", "", 16)
+        self.set_font("DejaVu", "B", 16)
         self.cell(0, 10, "Life Minus Work - DASS-21 Results", ln=True, align="C")
         self.ln(5)
 
@@ -94,6 +95,7 @@ def generate_pdf(name, dep_score, dep_cat, dep_msg, anx_score, anx_cat, anx_msg,
     if name:
         pdf.cell(0, 10, f"Name: {name}", ln=True)
     pdf.ln(5)
+
     pdf.set_font("DejaVu", "B", 12)
     pdf.cell(0, 10, "Depression", ln=True)
     pdf.set_font("DejaVu", "", 12)
